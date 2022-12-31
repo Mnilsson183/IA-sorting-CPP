@@ -1,12 +1,12 @@
 using namespace std;
 
 /**
- * @brief This is an implementation of the selection sort algorithm
+ * @brief This is an implementation of the insertion sort algorithm
  *
  */
 namespace sort
 {
-	class selection
+	class insertion
 	{
 	public:
 		vector<unsigned long> sort(vector<unsigned long> unsorted);

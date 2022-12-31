@@ -7,7 +7,7 @@
 #include "util/generate.h"
 #include "sort/merge.h"
 #include "sort/bubble.h"
-#include "sort/selection.h"
+#include "sort/insertion.h"
 
 using namespace std::chrono;
 using namespace util;
@@ -44,7 +44,7 @@ int main()
 	util::generate generate;
 	sort::merge merge;
 	sort::bubble bubble;
-	sort::selection selection;
+	sort::insertion insertion;
 	vector<unsigned long> unsorted_data;
 	vector<unsigned long> sorted_data;
 	int data_size;
@@ -60,6 +60,10 @@ int main()
 		data_size = 1000;
 		loop_size = 10;
 	}
+
+	// 0 = MergeSort;
+	// 1 = BubbleSort
+	// 2 = insertionSort
 
 	for (int j = 0; j < 3; j++)
 	{
@@ -77,7 +81,7 @@ int main()
 			else if (j == 1)
 				sorted_data = bubble.sort(unsorted_data);
 			else if (j == 2)
-				sorted_data = selection.sort(unsorted_data);
+				sorted_data = insertion.sort(unsorted_data);
 
 			// Stop the clock
 			auto stop = high_resolution_clock::now();
@@ -91,7 +95,7 @@ int main()
 			else if (j == 1)
 				sort_type = ", BubbleSort";
 			else if (j == 2)
-				sort_type = ", SelectionSort";
+				sort_type = ", insertionSort";
 
 			if (debug)
 			{
@@ -103,6 +107,8 @@ int main()
 			else
 				cout << "Size: " << unsorted_data.size() << ", duration(ms): " << duration.count() << sort_type << endl;
 		}
+		cout
+			<< endl;
 	}
 
 	return 0;

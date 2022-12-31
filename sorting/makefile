@@ -1,9 +1,9 @@
 CXX=g++
 CXXFLAGS:= -Wall -Wextra -pedantic-errors -std=c++0x
 OUT=sorting
-OBJS=build/generate.o build/merge.o build/bubble.o build/selection.o build/sorting.o 
+OBJS=build/generate.o build/merge.o build/bubble.o build/insertion.o build/sorting.o 
 
-$(OUT): build/generate.o build/merge.o build/bubble.o build/selection.o build/sorting.o
+$(OUT): build/generate.o build/merge.o build/bubble.o build/insertion.o build/sorting.o
 	$(CXX) $(CXXFLAGS) $(OBJS) -o $(OUT)
 
 build/generate.o: util/generate.cpp
@@ -18,8 +18,8 @@ build/merge.o: sort/merge.cpp
 build/bubble.o: sort/bubble.cpp
 	$(CXX) $(CXXFLAGS) -c sort/bubble.cpp -o build/bubble.o
 
-build/selection.o: sort/selection.cpp
-	$(CXX) $(CXXFLAGS) -c sort/selection.cpp -o build/selection.o
+build/insertion.o: sort/insertion.cpp
+	$(CXX) $(CXXFLAGS) -c sort/insertion.cpp -o build/insertion.o
 .PHONY:clean
 
 clean:
