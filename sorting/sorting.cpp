@@ -3,8 +3,11 @@
 #include <cstdlib>
 #include <ctime>
 #include <vector>
+#include <string>
 #include "util/generate.h"
 #include "sort/merge.h"
+#include "sort/bubble.h"
+#include "sort/selection.h"
 
 using namespace std::chrono;
 using namespace util;
@@ -26,6 +29,7 @@ void display(vector<unsigned long> data)
 			cout << ", ";
 		}
 	}
+	cout << endl;
 }
 
 /**
@@ -35,36 +39,71 @@ void display(vector<unsigned long> data)
  */
 int main()
 {
+	bool debug = false;
+
 	util::generate generate;
 	sort::merge merge;
+	sort::bubble bubble;
+	sort::selection selection;
 	vector<unsigned long> unsorted_data;
 	vector<unsigned long> sorted_data;
+	int data_size;
+	int loop_size;
 
-	for (unsigned long i = 1; i <= 10; i++)
+	if (debug)
 	{
-		// Generate the unsorted data
-		unsorted_data = generate.raw(i * 1000000);
-
-		// Start the clock
-		auto start = high_resolution_clock::now();
-
-		// Sort
-		sorted_data = merge.sort(unsorted_data);
-
-		// Stop the clock
-		auto stop = high_resolution_clock::now();
-
-		// Output info
-		auto duration = duration_cast<milliseconds>(stop - start);
-		cout << "Size: " << unsorted_data.size() << ", duration(ms): " << duration.count() << endl;
+		data_size = 2;
+		loop_size = 4;
+	}
+	else
+	{
+		data_size = 1000;
+		loop_size = 10;
 	}
 
-	// bool valid = generate.validate(data, sorted_data);
-	// cout << "Size: " << data.size() << ", duration: " << duration.count() << (valid ? ", valid" : ", invalid") << endl;
-	// display(data);
-	// cout << "\n"
-	// 	 << endl;
-	// display(sorted_data);
+	for (int j = 0; j < 3; j++)
+	{
+		for (int i = 1; i <= loop_size; i++)
+		{
+			// Generate the unsorted data
+			unsorted_data = generate.raw(i * data_size);
+
+			// Start the clock
+			auto start = high_resolution_clock::now();
+
+			// Sort
+			if (j == 0)
+				sorted_data = merge.sort(unsorted_data);
+			else if (j == 1)
+				sorted_data = bubble.sort(unsorted_data);
+			else if (j == 2)
+				sorted_data = selection.sort(unsorted_data);
+
+			// Stop the clock
+			auto stop = high_resolution_clock::now();
+
+			// Output info
+			auto duration = duration_cast<milliseconds>(stop - start);
+
+			string sort_type;
+			if (j == 0)
+				sort_type = ", MergeSort";
+			else if (j == 1)
+				sort_type = ", BubbleSort";
+			else if (j == 2)
+				sort_type = ", SelectionSort";
+
+			if (debug)
+			{
+				bool valid = generate.validate(unsorted_data, sorted_data);
+				cout << "Size: " << unsorted_data.size() << ", duration(ms): " << duration.count() << (valid ? ", valid" : ", invalid") << sort_type << endl;
+				display(unsorted_data);
+				display(sorted_data);
+			}
+			else
+				cout << "Size: " << unsorted_data.size() << ", duration(ms): " << duration.count() << sort_type << endl;
+		}
+	}
 
 	return 0;
 }
