@@ -1,2 +1,4 @@
-##This is a copy of the code that I used in my math international baccalaureate Internal Assesment##
+International Baccalaureate Math Internal Assessment
 
+This repository contains a copy of the code that I used in my International Baccalaureate (IB) Math Internal Assessment. The goal of the project was to investigate a mathematical topic of my choice and use data analysis and mathematical modeling to draw conclusions and make predictions.
+I created a C++ program that tests the time complexity of various sorting algorithms. The program generates a large array of random integers and sorts them using several different algorithms, measuring the execution time of each algorithm and comparing their performance.
